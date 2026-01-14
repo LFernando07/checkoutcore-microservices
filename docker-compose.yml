@@ -1,0 +1,109 @@
+version: "3.9"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_microservices
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+
+  postgres_users:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${USERS_DB_NAME}
+    ports:
+      - "5433:5432"
+    volumes:
+      - users_db:/var/lib/postgresql/data
+
+  postgres_orders:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${ORDERS_DB_NAME}
+    ports:
+      - "5434:5432"
+    volumes:
+      - orders_db:/var/lib/postgresql/data
+
+  postgres_payments:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${PAYMENTS_DB_NAME}
+    ports:
+      - "5435:5432"
+    volumes:
+      - payments_db:/var/lib/postgresql/data
+
+  postgres_notifications:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${NOTIFICATIONS_DB_NAME}
+    ports:
+      - "5436:5432"
+    volumes:
+      - notifications_db:/var/lib/postgresql/data
+
+  user-service:
+    build:
+      context: .
+      dockerfile: apps/service-users/Dockerfile
+    depends_on:
+      - postgres_users
+    env_file:
+      - ./apps/service-users/.env
+    ports:
+      - "3001:3000"
+
+  order-service:
+    build:
+      context: .
+      dockerfile: apps/service-orders/Dockerfile
+    depends_on:
+      - rabbitmq
+      - postgres_orders
+    env_file:
+      - ./apps/service-orders/.env
+    ports:
+      - "3002:3000"
+
+  payment-service:
+    build:
+      context: .
+      dockerfile: apps/service-payments/Dockerfile
+    depends_on:
+      - rabbitmq
+      - postgres_payments
+    env_file:
+      - ./apps/service-payments/.env
+    ports:
+      - "3003:3000"
+
+  notification-service:
+    build:
+      context: .
+      dockerfile: apps/service-notifications/Dockerfile
+    depends_on:
+      - rabbitmq
+      - postgres_notifications
+    env_file:
+      - ./apps/service-notifications/.env
+    ports:
+      - "3004:3000"
+
+volumes:
+  users_db:
+  orders_db:
+  payments_db:
+  notifications_db:

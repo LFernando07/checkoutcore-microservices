@@ -1,0 +1,45 @@
+{
+  "name": "OPPN_Microservices_System",
+  "version": "1.0.0",
+  "description": "Aplicacion para ordenar productos en linea utilizando una arquitectura de microservicios.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "build:shared": "pnpm --filter @oppn/shared build",
+    "dev:gateway": "pnpm --filter api-gateway start:dev",
+    "dev:notifications": "pnpm --filter service-notifications start:dev",
+    "dev:auth": "pnpm --filter service-auth start:dev",
+    "dev:users": "pnpm --filter service-users start:dev",
+    "dev:orders": "pnpm --filter service-orders start:dev",
+    "dev:payments": "pnpm --filter service-payments start:dev",
+    "dev:all": "pnpm build:shared && pnpm -r start:dev"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.1.11",
+    "@nestjs/config": "^4.0.2",
+    "@nestjs/core": "^11.1.11",
+    "@nestjs/jwt": "^11.0.0",
+    "@nestjs/mapped-types": "^2.1.0",
+    "@nestjs/microservices": "^11.1.11",
+    "@nestjs/platform-express": "^11.1.11",
+    "@nestjs/typeorm": "^11.0.0",
+    "@oppn/shared": "workspace:*",
+    "amqp-connection-manager": "^5.0.0",
+    "amqplib": "^0.10.9",
+    "bcrypt": "^6.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "pg": "^8.16.3",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "typeorm": "^0.3.28"
+  },
+  "keywords": [],
+  "author": "Luis Fernando Burgos Perea",
+  "license": "ISC",
+  "packageManager": "pnpm@10.17.0",
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/node": "^22.19.2"
+  }
+}
