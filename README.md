@@ -23,7 +23,7 @@ El sistema utiliza un **API Gateway** como punto de entrada, **RabbitMQ** como b
 
 ## 🧠 Arquitectura del Sistema
 
-![Architecture Diagram](.github/readme_assets/architecture.png)
+![Architecture Diagram](.github/readme_assets/OPPN_diagram.png)
 
 ### 📌 Descripción del Flujo
 
@@ -173,9 +173,6 @@ Esto levantará:
   1. API Gateway 3000
   2. Payments Service 3002
   3. RabbitMQ UI 15672
-
-🧪 Flujo Principal del Sistema
-![diagram](OPPN_diagram.png)
 
 🎯 Objetivo del Proyecto
 
