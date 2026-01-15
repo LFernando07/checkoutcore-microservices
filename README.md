@@ -23,8 +23,6 @@ El sistema utiliza un **API Gateway** como punto de entrada, **RabbitMQ** como b
 
 ## 🧠 Arquitectura del Sistema
 
-![Architecture Diagram](https://raw.githubusercontent.com/LFernando07/checkoutcore-microservices/main/.github/readme_assets/OPPN_diagram.png)
-
 ### 📌 Descripción del Flujo
 
 1. **Client Apps (Web App)**
